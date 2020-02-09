@@ -38,7 +38,8 @@
 
     <br>
     <h3>Отзывы</h3>
-    <span th:each="r : ${product.reviews}" th:text="${r.user.getFullName() + ' ' + r.content + '     Оценка: ' + r.value}"/>
+    <span th:each="r : ${product.reviews}"
+          th:text="${r.user.getFullName() + ' ' + r.content + '     Оценка: ' + r.value}"/>
 </div>
 
 </body>

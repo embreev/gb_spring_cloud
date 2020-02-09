@@ -13,7 +13,7 @@
 <body>
 
 <div class="container">
-    <div th:replace="~{navigation :: navigation(Home)}" />
+    <div th:replace="~{navigation :: navigation(Home)}"/>
 
     <h1>December Market</h1>
 
@@ -26,7 +26,8 @@
                    th:placeholder="#{filters.price.max}"/>
             <select name="cat_id">
                 <option th:text="'Не выбрана'" th:value="null"/>
-                <option th:each="c : ${categories}" th:text="${c.title}" th:selected="${param.cat_id != null && c.id.toString() == param.cat_id.toString()}"
+                <option th:each="c : ${categories}" th:text="${c.title}"
+                        th:selected="${param.cat_id != null && c.id.toString() == param.cat_id.toString()}"
                         th:value="${c.id}"/>
             </select>
         </div>
@@ -66,7 +67,8 @@
         <ul class="pagination">
             <li class="page-item">
                 <a class="page-link"
-                   th:href="@{'/?p='+ ${page.previousOrFirstPageable().getPageNumber() + 1} + ${filtersDef}}" th:text="#{paging.prev}"></a>
+                   th:href="@{'/?p='+ ${page.previousOrFirstPageable().getPageNumber() + 1} + ${filtersDef}}"
+                   th:text="#{paging.prev}"></a>
             </li>
             <li class="page-item" th:classappend="${page.getNumber() + 1 == i ? 'active' : ''}"
                 th:each="i : ${#numbers.sequence(1, page.getTotalPages())}">
@@ -74,7 +76,8 @@
             </li>
             <li class="page-item">
                 <a class="page-link"
-                   th:href="@{'/?p='+ ${page.nextOrLastPageable().getPageNumber() + 1} + ${filtersDef}}" th:text="#{paging.next}"></a>
+                   th:href="@{'/?p='+ ${page.nextOrLastPageable().getPageNumber() + 1} + ${filtersDef}}"
+                   th:text="#{paging.next}"></a>
             </li>
         </ul>
     </nav>
