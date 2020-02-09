@@ -1,29 +1,31 @@
 package com.gb.cloudmarket.controllers;
 
+//import com.gb.cloudmarket.entites.Product;
+import com.gb.cloudmarket.ProductDTO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import com.gb.cloudmarket.services.CategoryService;
-import com.gb.cloudmarket.services.ProductService;
-import com.gb.cloudmarket.services.UserService;
-import java.util.Map;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.client.RestTemplate;
+
+import java.util.List;
 
 @Controller
 public class MarketController {
-    private ProductService productService;
-    private CategoryService categoryService;
-    private UserService userService;
+    private RestTemplate restTemplate;
 
-    public MarketController(ProductService productService, CategoryService categoryService, UserService userService) {
-        this.productService = productService;
-        this.categoryService = categoryService;
-        this.userService = userService;
+    @Autowired
+    public MarketController(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
     }
 
-
-    @GetMapping("/")
-    public String index(Model model, @RequestParam Map<String, String> params) {
+    @RequestMapping("/")
+    public String index(Model model) {
+        ResponseEntity rest = restTemplate.exchange("http://localhost:8189/backend/products/", HttpMethod.GET, null, List.class);
+        List<ProductDTO> products = (List<ProductDTO>)rest.getBody();
+        model.addAttribute("products", products);
         return "index";
     }
 }
